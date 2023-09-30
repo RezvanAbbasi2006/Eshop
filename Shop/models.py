@@ -45,3 +45,10 @@ class Message(models.Model):
 
     def save(self, *args, **kwargs):
         super(Message, self).save(*args, **kwargs)
+
+
+class Cart(models.Model):
+    title = models.CharField(max_length=100, null=True, default='سبد خرید')
+    create_date = models.DateTimeField(verbose_name='', name='date', auto_now=True)
+    update_date = models.DateTimeField(verbose_name='update date', name='update date', auto_now=True)
+    content_text = models.CharField(max_length=100, null=True, default=None)

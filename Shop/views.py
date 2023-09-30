@@ -6,8 +6,8 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 
-from Shop.models import Product, Profile, Message
-from Shop.serializers import ProductSerializer, ProfileSerializer, UserSerializer, MessageSerializer
+from Shop.models import Product, Profile, Message, Cart
+from Shop.serializers import ProductSerializer, ProfileSerializer, UserSerializer, MessageSerializer, CartSerializer
 
 
 @csrf_exempt
@@ -86,3 +86,10 @@ class MessageViewSet(viewsets.ModelViewSet):
             message.save()
             return Response(data="send message", status=status.HTTP_201_CREATED)
         return Response(data="Please enter correct", status=status.HTTP_403_FORBIDDEN)
+
+
+class CartViewSet(viewsets.ModelViewSet):
+    queryset = Cart.objects.all()
+    serializer_class = CartSerializer
+    permission_classes = [IsAuthenticated]
+
