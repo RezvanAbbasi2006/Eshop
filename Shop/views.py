@@ -13,21 +13,6 @@ from Shop.serializers import ProductSerializer, ProfileSerializer, UserSerialize
 @csrf_exempt
 @api_view(["POST"])
 @permission_classes([AllowAny])
-def login(request):
-    mobile = request.data["mobile"]
-    password = request.data["password"]
-    try:
-        pro = Profile.objects.get(mobile__exact=mobile)
-        if pro.password == password:
-            return Response(data="OK", status=status.HTTP_200_OK)
-        return Response(data="Password is incorrect", status=status.HTTP_404_NOT_FOUND)
-    except Profile.DoesNotExist:
-        return Response({'is_user': False}, status=status.HTTP_401_UNAUTHORIZED)
-
-
-@csrf_exempt
-@api_view(["POST"])
-@permission_classes([AllowAny])
 def register(request):
     if not Profile.objects.filter(mobile__exact=request.data['mobile']):
         # img = request.data['img']
@@ -50,6 +35,21 @@ def register(request):
         pro.save()
         return Response(status=status.HTTP_201_CREATED)
     return Response({'is_user': True}, status=status.HTTP_403_FORBIDDEN)
+
+
+@csrf_exempt
+@api_view(["POST"])
+@permission_classes([AllowAny])
+def login(request):
+    mobile = request.data["mobile"]
+    password = request.data["password"]
+    try:
+        pro = Profile.objects.get(mobile__exact=mobile)
+        if pro.password == password:
+            return Response(data="OK", status=status.HTTP_200_OK)
+        return Response(data="Password is incorrect", status=status.HTTP_404_NOT_FOUND)
+    except Profile.DoesNotExist:
+        return Response({'is_user': False}, status=status.HTTP_401_UNAUTHORIZED)
 
 
 class ProductViewSet(viewsets.ModelViewSet):

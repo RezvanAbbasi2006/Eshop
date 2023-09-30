@@ -8,7 +8,7 @@ class Product(models.Model):
     color = models.CharField(max_length=100, null=True)
     expire_date = models.CharField(max_length=50, null=True)
     company_name = models.CharField(max_length=100, null=True)
-    number = models.IntegerField(null=True, default=1)
+    count = models.IntegerField(null=True, default=1)
 
     def save(self, *args, **kwargs):
         super(Product, self).save(*args, **kwargs)
